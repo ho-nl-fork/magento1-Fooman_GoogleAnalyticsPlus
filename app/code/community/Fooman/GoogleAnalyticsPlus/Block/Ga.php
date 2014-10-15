@@ -78,6 +78,9 @@ class Fooman_GoogleAnalyticsPlus_Block_Ga extends Fooman_GoogleAnalyticsPlus_Blo
      */
     public function shouldIncludeTracking()
     {
+        // Don't insert old Google Analytics code when Universal is enabled
+        if (Mage::getStoreConfig('google/analyticsplus_universal/enabled')) return false;
+
         $coreHelperDir = Mage::getConfig()->getModuleDir('', 'Mage_Core') . DS . 'Helper' . DS;
         if (file_exists($coreHelperDir . 'Cookie.php')) {
             if (Mage::helper('core/cookie')->isUserNotAllowSaveCookie()) {
